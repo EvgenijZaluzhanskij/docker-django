@@ -1,41 +1,41 @@
 version: '3'
 
 services:
-  nginx:
-    image: docker-nginx:latest
+  docker-django-nginx:
+    image: docker-django-nginx:latest
     build:
       context: .
       dockerfile: deploy/nginx/Dockerfile
     ports:
-      - 80:80
+      - 8080:80
     volumes:
       - static:/app/static
     depends_on:
-      - app
+      - docker-django-app
 
-  app:
-    image: docker-django:latest
+  docker-django-app:
+    image: docker-django-app:latest
     build: 
       context: .
-      dockerfile: deploy/python/Dockerfile
+      dockerfile: Dockerfile
     restart: always
     ports:
       - 8000:8000
     depends_on: 
-      - django-db
+      - docker-django-db
     environment:
-      DB_HOST: django-db 
+      DB_HOST: docker-django-db
     volumes:
       - static:/app/static
 
-  django-db:
+  docker-django-db:
     image: postgres:13-alpine
     ports:
       - 5432:5432
     volumes:
       - ./db:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: password
 
 volumes:
   static:
