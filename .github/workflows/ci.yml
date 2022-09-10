@@ -66,7 +66,8 @@ jobs:
           username: ${{ secrets.YANDEX_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo apt --assume-yes install docker.io
+            sudo apt-get update
+            sudo apt-get --assume-yes install docker.io
             # Выполняет pull образа с DockerHub
             sudo docker pull evgenijzaluzhanskij/docker-django
             #остановка всех контейнеров
