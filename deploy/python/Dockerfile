@@ -1,15 +1,17 @@
-FROM python:3.8
+FROM python:3.7-slim
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
+
+RUN mkdir static
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY . .
 
+RUN chmod u+x start.sh
+
 EXPOSE 8000
 
-RUN python manage.py collectstatic --noinput
-
-CMD python manage.py migrate && uwsgi deploy/python/uwsgi.ini
+CMD ["./start.sh"]
