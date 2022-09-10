@@ -8,9 +8,9 @@ RUN mkdir static
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY deploy/python .
 
-RUN chmod u+x start.sh
+# RUN chmod u+x start.sh
 
 EXPOSE 8000
 

@@ -17,7 +17,7 @@ services:
     image: docker-django-app:latest
     build: 
       context: .
-      dockerfile: deploy/python/Dockerfile
+      dockerfile: Dockerfile
     restart: always
     ports:
       - 8000:8000
