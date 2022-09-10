@@ -52,3 +52,24 @@ jobs:
         with:
           push: true
           tags: evgenijzaluzhanskij/docker-django:latest
+
+  deploy:
+    name: "Deploy to server"
+    needs: build_image_and_push_to_registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Deploy app"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.YANDEX_HOST }}
+          username: ${{ secrets.YANDEX_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo apt-get update
+            sudo apt-get --assume-yes install docker.io
+            # Выполняет pull образа с DockerHub
+            sudo docker pull evgenijzaluzhanskij/docker-django
+            #остановка всех контейнеров
+            sudo docker stop $(sudo docker ps -a -q)
+            sudo docker run --rm -d -p 8000:8000 evgenijzaluzhanskij/docker-django
