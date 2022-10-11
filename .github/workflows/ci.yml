@@ -56,6 +56,6 @@ jobs:
       - name: telegram message notify
         uses: appleboy/telegram-action@master
         with:
-          to: 123123
-          token: 123123
+          to: 241427176
+          token: "943085720:AAGuJxM8H7TBCiL5N3dhYA2_mDsADGhO0RA"
           message: ${{ github.workflow }} успешно выполнен!
